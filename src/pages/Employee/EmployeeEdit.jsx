@@ -34,7 +34,7 @@ const EmployeeEdit = () => {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [id, token]);
 
   const handleChanged = (e) => {
     setEmployee((prev) => ({ ...prev, [e.target.name]: e.target.value }));
