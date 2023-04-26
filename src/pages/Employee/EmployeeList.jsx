@@ -31,7 +31,7 @@ const EmployeeList = () => {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [token]);
 
   return (
     <>

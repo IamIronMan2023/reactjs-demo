@@ -41,7 +41,7 @@ const EmployeeView = () => {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [id, token]);
 
   const handleDelete = (e) => {
     if (window.confirm("Are you really sure you want to delete this record?")) {
