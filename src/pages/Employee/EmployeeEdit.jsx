@@ -9,6 +9,7 @@ const EmployeeEdit = () => {
     last_name: "",
     age: 0,
     email: "",
+    picture: null
   });
   const navigate = useNavigate();
   const { token } = useAuth();
@@ -40,23 +41,29 @@ const EmployeeEdit = () => {
     setEmployee((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handlePictureChanged = (e) => {
+    setEmployee((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
+  }
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let url = `${process.env.REACT_APP_API_URL}/employees`;
 
+    const formData = new FormData();
+    formData.append('first_name', employee.first_name);
+    formData.append('last_name', employee.last_name);
+    formData.append('age', employee.age);    
+    formData.append('email', employee.email);    
+    formData.append('picture', employee.picture, employee.picture.name);
+    formData.append('id', id);
+
     const requestOptions = {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        first_name: employee.first_name,
-        last_name: employee.last_name,
-        age: employee.age,
-        email: employee.email,
-        id: id
-      }),
+      body: formData,
     };
 
     fetch(url, requestOptions)
@@ -112,6 +119,16 @@ const EmployeeEdit = () => {
             value={employee.email}
           ></input>
         </p>
+        <p>
+          <label>Picture</label>
+          <input
+            type="file"
+            name="picture"
+            accept=".png,.jpg"
+            onChange={handlePictureChanged}            
+          />
+        </p>
+
 
         <input type="submit" value="Update" />
       </form>
