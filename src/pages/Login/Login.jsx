@@ -10,7 +10,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let url = "http://127.0.0.1:8000/api/login";
+    let url = `${process.env.REACT_APP_API_URL}/login`;
 
     const requestOptions = {
       method: "POST",
@@ -28,7 +28,7 @@ const Login = () => {
       const response = await fetch(url, requestOptions);
       if (response.status === 200) {
         let loginData = await response.json();
-        setToken(loginData.token);
+        setToken(loginData.access_token);
         setIsAuthenticate(true);
         navigate("/");
       } else {

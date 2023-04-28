@@ -7,21 +7,24 @@ import EmployeeView from "./pages/Employee/EmployeeView";
 import EmployeeCreate from "./pages/Employee/EmployeeCreate";
 import Login from "./pages/Login/Login";
 import AuthProvider from "./contexts/AuthContext";
+import SecureRoute from "./SecureRoute";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <Routes>
-          <Route path="/" element={<EmployeeList />}></Route>
+          <Route element={<SecureRoute />}>
+            <Route path="/" element={<EmployeeList />}></Route>
+            <Route path="/employee/:id" element={<EmployeeView />}></Route>
+            <Route path="/employee/edit/:id" element={<EmployeeEdit />}></Route>
+            <Route path="/employee/new" element={<EmployeeCreate />}></Route>
+            <Route path="*" element={<NotFound />}></Route>
+          </Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/employee/:id" element={<EmployeeView />}></Route>
-          <Route path="/employee/edit/:id" element={<EmployeeEdit />}></Route>
-          <Route path="/employee/new" element={<EmployeeCreate />}></Route>
-          <Route path="*" element={<NotFound />}></Route>
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
